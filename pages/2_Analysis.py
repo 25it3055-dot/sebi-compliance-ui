@@ -1,59 +1,85 @@
 import streamlit as st
+import pandas as pd
+from components.sidebar import render_sidebar
 
-st.set_page_config(
-    page_title="AI Compliance Analysis",
-    page_icon="🤖",
-    layout="wide"
+# 1. Sidebar Render
+render_sidebar()
+
+# 2. Main Title Section
+st.title("🤖 AI Compliance Analysis")
+st.caption("Detailed breakdown, risk rating, and compliance actionable items extracted by AI.")
+
+st.markdown("---")
+
+# 3. Executive Summary
+st.subheader("📄 Executive Summary")
+st.info(
+    "This SEBI circular introduces revised KYC (Know Your Customer) verification requirements "
+    "and mandatory quarterly reporting standards for all registered intermediaries to enhance transparency."
 )
 
-st.title("🤖 AI Compliance Analysis")
+st.markdown("---")
 
-st.markdown("AI has analyzed the uploaded SEBI circular.")
-
-st.divider()
-
-col1, col2, col3 = st.columns(3)
+# 4. Metrics: Risk Level & Compliance Score
+col1, col2 = st.columns(2)
 
 with col1:
-    st.metric("Risk Level", "High")
+    st.markdown("### ⚠️ Risk Level")
+    st.error("🔴 **HIGH RISK**")
 
 with col2:
-    st.metric("Compliance Score", "82%")
+    st.markdown("### 📊 Compliance Score")
+    st.progress(82)
+    st.caption("Current Readiness: **82%**")
 
-with col3:
-    st.metric("Deadline", "30 Aug 2026")
+st.markdown("---")
 
-st.divider()
+# 5. Affected Departments & Checklist
+col_dept, col_check = st.columns(2)
 
-st.subheader("📄 Circular Summary")
+with col_dept:
+    st.subheader("🏢 Affected Departments")
+    st.markdown("""
+    * ⚖️ **Legal & Regulatory**
+    * 🔍 **Compliance Team**
+    * ⚙️ **Operations**
+    * 🛡️ **Risk Management**
+    """)
 
-st.info("""
-The circular introduces updated KYC verification requirements.
-Financial institutions must revise onboarding procedures,
-notify customers, and ensure compliance before the deadline.
-""")
+with col_check:
+    st.subheader("📋 Actionable Checklist")
+    st.checkbox("Update internal KYC verification policy", value=True)
+    st.checkbox("Notify all active clients via email", value=True)
+    st.checkbox("Conduct employee training session", value=False)
+    st.checkbox("Submit quarterly compliance report to SEBI", value=False)
 
-st.subheader("🏢 Responsible Departments")
+st.markdown("---")
 
-st.write("✅ Compliance Team")
-st.write("✅ Legal Team")
-st.write("✅ Operations Team")
+# 6. Recommendations & Important Deadlines
+col_rec, col_dead = st.columns(2)
 
-st.subheader("✅ Compliance Checklist")
+with col_rec:
+    st.subheader("💡 AI Recommendations")
+    st.success("• Automate KYC document checks to speed up compliance.")
+    st.warning("• Ensure client notification is completed prior to the upcoming deadline.")
+    st.info("• Schedule an internal audit by next month.")
 
-st.checkbox("Update KYC Process")
-st.checkbox("Notify Existing Clients")
-st.checkbox("Revise Internal Policy")
-st.checkbox("Conduct Employee Training")
+with col_dead:
+    st.subheader("📅 Key Deadlines")
+    deadlines_df = pd.DataFrame({
+        "Task": ["Update Policy", "Client Notification", "Submit Audit"],
+        "Deadline": ["30 Jul 2026", "05 Aug 2026", "15 Aug 2026"]
+    })
+    st.table(deadlines_df)
 
-st.subheader("💡 AI Recommendations")
+st.markdown("---")
 
-st.success("""
-• Update internal compliance policy.
-
-• Notify all stakeholders.
-
-• Complete implementation before deadline.
-
-• Monitor compliance status weekly.
-""")
+# 7. Report Download Button
+st.subheader("📥 Export Results")
+st.download_button(
+    label="Download Full AI Compliance Report (PDF)",
+    data="SEBI Circular AI Analysis Report - Sample Content",
+    file_name="SEBI_Compliance_Report.txt",
+    mime="text/plain",
+    type="primary"
+)
