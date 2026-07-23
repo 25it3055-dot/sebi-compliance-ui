@@ -1,42 +1,55 @@
 import streamlit as st
 import time
+from components.sidebar import render_sidebar
 
-st.set_page_config(page_title="Upload Circular", page_icon="📤")
+# 1. Sidebar render karein
+render_sidebar()
 
+# 2. Header Title
 st.title("📤 Upload SEBI Circular")
+st.caption("Upload a PDF circular or paste regulation text for AI analysis.")
 
-st.write("Upload a SEBI circular (PDF) or paste regulatory text for AI analysis.")
+st.markdown("---")
 
-st.divider()
+# 3. Layout: Columns for Uploader and Text Area
+col1, col2 = st.columns(2)
 
-uploaded_file = st.file_uploader(
-    "Choose a PDF file",
-    type=["pdf"]
-)
+with col1:
+    st.subheader("📄 Upload PDF Document")
+    uploaded_file = st.file_uploader(
+        "Choose a SEBI Circular (PDF)", 
+        type=["pdf"],
+        help="Limit 20MB per file • PDF format only"
+    )
 
-st.markdown("### OR")
+    if uploaded_file is not None:
+        st.info(f"**File Name:** {uploaded_file.name}")
+        st.write(f"**File Size:** {round(uploaded_file.size / 1024, 2)} KB")
 
-regulation_text = st.text_area(
-    "Paste Regulation Text",
-    height=200,
-    placeholder="Paste SEBI regulation text here..."
-)
+with col2:
+    st.subheader("📝 Or Paste Circular Text")
+    circular_text = st.text_area(
+        "Paste regulation text here...", 
+        height=180,
+        placeholder="Enter SEBI circular details, guidelines, or requirements..."
+    )
 
-if st.button("🚀 Analyze Circular", use_container_width=True):
+st.markdown("---")
 
-    if uploaded_file is None and regulation_text.strip() == "":
-        st.warning("Please upload a PDF or paste regulation text.")
+# 4. Action Button & Analysis Logic
+if st.button("🔍 Analyze Circular", type="primary", use_container_width=True):
+    if uploaded_file is not None or circular_text.strip() != "":
+        # Progress Bar Simulation
+        progress_text = "Analyzing circular with AI agent..."
+        my_bar = st.progress(0, text=progress_text)
 
+        for percent_complete in range(100):
+            time.sleep(0.01)
+            my_bar.progress(percent_complete + 1, text=progress_text)
+            
+        time.sleep(0.3)
+        my_bar.empty()
+        
+        st.success("✅ Analysis Complete! Check the **Analysis** page to view results.")
     else:
-
-        with st.spinner("Analyzing Circular..."):
-
-            time.sleep(2)
-
-        st.success("✅ Analysis Completed Successfully!")
-
-        if uploaded_file:
-            st.info(f"Uploaded File: {uploaded_file.name}")
-
-        if regulation_text:
-            st.write("Text Length:", len(regulation_text), "characters")
+        st.warning("⚠️ Please upload a PDF file or paste circular text before analyzing.")

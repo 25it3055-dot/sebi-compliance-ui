@@ -1,19 +1,40 @@
-import pandas as pd
 import streamlit as st
-from components.charts import bar_chart, pie_chart
+import pandas as pd
+import os
 
-# Page Configuration
+# Reusable Components Import
+from components.cards import metric_cards
+from components.charts import compliance_pie_chart, monthly_trend_chart
+from utils.style import load_css
+
+# 1. Page Configuration
 st.set_page_config(
-    page_title="SEBI Compliance Dashboard", page_icon="📑", layout="wide"
+    page_title="SEBI Compliance Dashboard", 
+    page_icon="📑", 
+    layout="wide"
 )
 
+# Custom CSS Load
+load_css()
+
+# --- SIDEBAR SECTION ---
 st.sidebar.title("🏛️ SEBI Portal")
-
 st.sidebar.markdown("---")
-
 st.sidebar.success("AI Compliance Assistant")
-
 st.sidebar.markdown("---")
+# KPI Cards
+metric_cards()
+
+st.divider()
+
+# Charts
+col1, col2 = st.columns(2)
+
+with col1:
+    compliance_pie_chart()
+
+with col2:
+    monthly_trend_chart()
 import streamlit as st
 
 # Sidebar me logo dikhane ke liye:
@@ -23,8 +44,7 @@ st.sidebar.image("assets/logo.png", width=120)
 st.title("📑 SEBI Agentic Compliance Dashboard")
 st.write("---")
 
-# 1. Dashboard Metrics / Cards
-col1, col2, col3, col4 = st.columns(4)
+metric_cards()
 
 with col1:
     st.metric(label="📄 Total Circulars", value="25")

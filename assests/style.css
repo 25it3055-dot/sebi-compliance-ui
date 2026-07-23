@@ -1,0 +1,22 @@
+.main {
+    background-color: #F8FAFC;
+}
+
+h1 {
+    color: #1E3A8A;
+}
+
+div[data-testid="stMetric"] {
+    background-color: white;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.stButton > button {
+    width: 100%;
+    background: #2563EB;
+    color: white;
+    border-radius: 10px;
+}

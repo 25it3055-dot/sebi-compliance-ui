@@ -1,0 +1,17 @@
+# Theme Colors
+PRIMARY = "#1E3A8A"
+SECONDARY = "#2563EB"
+SUCCESS = "#16A34A"
+WARNING = "#F59E0B"
+DANGER = "#DC2626"
+BACKGROUND = "#F8FAFC"
+
+# App Info
+APP_NAME = "SEBI Agentic Compliance"
+VERSION = "v1.0"
+
+# Dashboard Metrics (Dummy)
+TOTAL_CIRCULARS = 25
+HIGH_RISK = 4
+PENDING = 12
+COMPLETED = 13
